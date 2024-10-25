@@ -55,9 +55,6 @@ def predict():
         return jsonify({'error': 'Prediction failed', 'details': str(e)}), 500
 
 
-if __name__ == '__main__':
-    # try:
-    app.run(host='0.0.0.0', port=3400, debug=True)
-    # finally:
-    #     if ser.is_open:
-    #         ser.close()
+if __name__ == "__main__":
+    port = int(os.getenv("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
