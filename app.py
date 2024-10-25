@@ -54,10 +54,10 @@ def predict():
         print(f"Error during prediction: {e}")
         return jsonify({'error': 'Prediction failed', 'details': str(e)}), 500
 
-PORT = os.environ.get('PORT', 3000)
+
 if __name__ == '__main__':
     # try:
-    app.run(host='0.0.0.0', port=PORT, debug=True)
+    app.run(host='0.0.0.0', port=3400, debug=True)
     # finally:
     #     if ser.is_open:
     #         ser.close()
