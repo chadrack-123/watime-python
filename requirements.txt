@@ -4,5 +4,6 @@ numpy
 joblib
 pyserial
 gunicorn
+scikit-learn
 # time
 # os
