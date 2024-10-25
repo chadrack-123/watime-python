@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .profile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            width: 100%;
+            padding: 20px;
+        }
+
+        .tab-content {
+            max-width: 400px; /* Adjusted max width for better fit */
+            width: 100%;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px; /* Add margin to separate it from the profile heading */
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+    
+        .update-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .profile-picture-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+
+        .profile-picture {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            border: 2px solid #ddd;
+            background-color: #f4f4f4;
+            object-fit: cover;
+        }
+
+        input[type="file"] {
+            display: none; /* Hide file input */
+        }
+    </style>
+    <script>
+        // JavaScript to handle form submission and retain the form data
+        document.addEventListener('DOMContentLoaded', function() {
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const usernameInput = document.getElementById('username');
+            const cityInput = document.getElementById('city');
+            const profilePicInput = document.getElementById('profile-pic');
+            const updateButton = document.getElementById('update-button');
+            const profilePicContainer = document.querySelector('.profile-picture-container');
+
+            // Disable input fields initially
+            emailInput.disabled = true;
+            passwordInput.disabled = true;
+            usernameInput.disabled = true;
+            cityInput.disabled = true;
+
+            // Check if there is saved profile data in localStorage
+            if (localStorage.getItem('profileData')) {
+                const profileData = JSON.parse(localStorage.getItem('profileData'));
+                emailInput.value = profileData.email || '';
+                passwordInput.value = profileData.password || '';
+                usernameInput.value = profileData.username || '';
+                cityInput.value = profileData.city || '';
+                if (profileData.profilePic) {
+                    document.getElementById('profile-pic-img').src = profileData.profilePic;
+                }
+            }
+
+            // Handle update button click
+            updateButton.addEventListener('click', function() {
+                if (updateButton.textContent === 'Update') {
+                    // Enable fields for editing
+                    emailInput.disabled = false;
+                    passwordInput.disabled = false;
+                    usernameInput.disabled = false;
+                    cityInput.disabled = false;
+                    profilePicInput.disabled = false;
+                    updateButton.textContent = 'Save'; // Change button text to indicate action
+                } else if (updateButton.textContent === 'Save') {
+                    // Save profile data
+                    const email = emailInput.value;
+                    const password = passwordInput.value;
+                    const username = usernameInput.value;
+                    const city = cityInput.value;
+                    const profilePic = profilePicInput.files[0] ? URL.createObjectURL(profilePicInput.files[0]) : '';
+
+                    const profileData = {
+                        email: email,
+                        password: password,
+                        username: username,
+                        city: city,
+                        profilePic: profilePic
+                    };
+                    localStorage.setItem('profileData', JSON.stringify(profileData));
+
+                    // Disable fields again
+                    emailInput.disabled = true;
+                    passwordInput.disabled = true;
+                    usernameInput.disabled = true;
+                    cityInput.disabled = true;
+                    profilePicInput.disabled = true;
+                    updateButton.textContent = 'Update'; // Revert button text
+
+                    alert('Profile updated successfully!');
+                }
+            });
+
+            // Handle profile picture change
+            profilePicInput.addEventListener('change', function() {
+                const file = profilePicInput.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        document.getElementById('profile-pic-img').src = event.target.result;
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Trigger file input on profile picture click
+            profilePicContainer.addEventListener('click', function() {
+                profilePicInput.click();
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <ul class="navbar-links">
+                <li><a href="/dashboard" class="nav-link">WaTime App</a></li>
+            </ul>
+        </div>
+        <div>
+            <ul class="navbar-links">
+                <li><a href="/dashboard" class="nav-link">Home</a></li>
+                <li><a href="/myfield" class="nav-link">My Field</a></li>
+                <li><a href="/tips" class="nav-link">Tips</a></li>
+                <li><a href="/profile" class="nav-link">Profile</a></li>
+                <li><a href="/logout" class="nav-link">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="profile">
+        <h1>Your Profile</h1>
+        <div class="tab-content" id="details">
+            <div class="profile-picture-container">
+                <img id="profile-pic-img" class="profile-picture" src="default-profile-pic.jpg" alt="Profile Picture">
+                <input type="file" id="profile-pic" name="profile-pic" accept="image/*">
+            </div>
+            <form id="details-form">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="city">City:</label>
+                    <input type="text" id="city" name="city" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="button-group">
+                    <button type="button" id="update-button" class="update-button">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

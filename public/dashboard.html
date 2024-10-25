@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body x-data="weatherApp()">
+    <div class="overlay"></div>
+
+    <nav class="navbar">
+        <div class="logo">
+            <ul class="navbar-links">
+                <li><a href="/dashboard" class="nav-link">WaTime App</a></li>
+            </ul>
+        </div>
+        <div class="navbarTabs">
+            <ul class="navbar-links">
+                <li><a href="/dashboard" class="nav-link">Home</a></li>
+                <li><a href="/myfield" class="nav-link">My Field</a></li>
+                <li><a href="/tips" class="nav-link">Tips</a></li>
+                <li><a href="/profile" class="nav-link">Profile</a></li>
+                <li><a href="/logout" class="nav-link">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <div class="cityWeatherStatus">
+            <div class="searchCity">
+                <input type="text" class="city" id="city-autocomplete" placeholder="Enter city" x-model="city">
+                <button class="city-btn" @click="getWeatherByCity">Search</button>
+                <button class="location-btn" @click="getWeatherByLocation">Use My Location</button>
+            </div>
+            <div class="weatherDetails">
+                <div >
+                    <div class="weatherVariables">
+                        <p class="weatherVars">Humidity: </p>
+                        <p class="weatherVars" x-text="humidity">%</p>
+                    </div>
+                    <div class="weatherVariables">
+                        <p class="weatherVars">Pressure: </p>
+                        <p class="weatherVars" x-text="pressure">hPa</p>
+                    </div>
+                    <div class="weatherVariables">
+                        <p class="weatherVars">Cloudiness: </p>
+                        <p class="weatherVars" x-text="cloud_cover">%</p>
+                    </div>
+                    <div class="weatherVariables">
+                        <p class="weatherVars">Visibility: </p>
+                        <p class="weatherVars" x-text="visibility">km</p>
+                    </div>
+                </div>
+                
+
+                <div>
+                    <div class="cityDescrip" id="temp-div" x-text="temperature"></div>
+                    <div>
+                        <img id="weather-icon" :src="weatherIconUrl" x-show="weatherIconUrl" alt="Weather Icon">
+                    </div>
+                    <div id="weather-info">
+                        <p class="cityDescrip" x-text="cityName"></p>
+                        <p class="cityDescrip" x-text="description"></p>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="weatherVariables">
+                        <p class="weatherVars">Rain Volume (1h): </p>
+                        <p class="weatherVars" x-text="rain">mm/h</p>
+                    </div>
+                    <div class="weatherVariables">
+                        <p class="weatherVars">Snow Volume (1h): </p>
+                        <p class="weatherVars" x-text="snowfall">mm/h</p>
+                    </div>
+                    <div class="weatherVariables">
+                        <p class="weatherVars">Wind Speed: </p>
+                        <p class="weatherVars" x-text="windSpeed">m/s</p>
+                    </div>
+                    <div class="weatherVariables">
+                        <p class="weatherVars">Wind Direction: </p>
+                        <p class="weatherVars" x-text="windDirection">°</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="hourly-forecast">
+            <template x-for="hour in hourlyForecast">
+                <div class="hourly-item">
+                    <span x-text="hour.time"></span>
+                    <img :src="hour.iconUrl" alt="Hourly Weather Icon">
+                    <span x-text="hour.temp"></span>
+                </div>
+            </template>
+        </div>
+        
+        
+
+        <div class="container">
+
+            <div class="loadModel" x-show="loading">
+                
+                <p>Loading prediction...</p>
+            </div>
+
+            <div class="irrigation_status" x-show="!loading && prediction !== null">
+                <h1>Irrigation status</h1>
+                <h3 x-text="irrigateDecision"></h3>
+
+
+            </div>
+
+            <div x-show="!loading && prediction !== null && irrigateDecision === irrigation">
+                <img src="assets/tenor.gif" alt="irrigation">
+            </div>
+
+
+            <div x-show="!loading && prediction !== null && irrigateDecision === noIrrigation">
+                <img src="assets/closed-irrigation.jpeg" alt="irrigation">
+            </div>
+        </div>
+    </div>
+
+    <script src="functionality.js"></script>
+
+</body>
+
+</html>

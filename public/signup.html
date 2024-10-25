@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="auth.css">
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="auth.js" ></script>
+</head>
+<body>
+    <!-- Overlay div -->
+    <div class="overlay"></div>
+    <div class="content">
+        <div x-data="auth()">
+
+            <h2 class="form-title">Sign Up for WaTime</h2>
+            <!-- Signup Form -->
+            <form @submit.prevent="signup">
+                <h2>Register</h2>
+                <input type="email" x-model="email" placeholder="Email" required>
+                <input type="password" x-model="password" placeholder="Password" required>
+                <input type="password" x-model="confirmPassword" placeholder="Confirm Password" required>
+                <button type="submit">Sign Up</button>
+            </form>
+    
+            <p>Already have an account? <a class="log-btn" href="/public/login.html">Login here</a></p>
+    
+            <p x-text="message"></p>
+        </div>
+    </div>
+
+    <!-- <script>
+        function auth() {
+            return {
+                username: '',
+                email: '',
+                password: '',
+                message: '',
+
+                async signup() {
+                    const response = await fetch('/signup', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            username: this.username,
+                            email: this.email,
+                            password: this.password,
+                        }),
+                    });
+                    const data = await response.json();
+                    this.message = data.message || data.error;
+                },
+            };
+        }
+    </script> -->
+</body>
+</html>

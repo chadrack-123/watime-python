@@ -1,0 +1,187 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f4f8;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #0288d1;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-bottom: 5px solid #0277bd;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+.container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.section {
+    margin-bottom: 40px;
+}
+
+.section h2 {
+    color: #0288d1;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+/* Charts container: to place graphs next to each other with spacing */
+.chart-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; /* Space between the charts */
+    flex-wrap: wrap;
+}
+
+.chart {
+    width: 48%; /* Make sure each chart takes 48% of the container width */
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.chart h3 {
+    text-align: center;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+canvas {
+    width: 100% !important;
+    height: 200px !important;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .chart-container {
+        flex-direction: column; /* Stack charts on top of each other */
+    }
+
+    .chart {
+        width: 100%; /* Each chart takes the full width of the container */
+    }
+}
+
+/* Status cards styling */
+.status-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.status-card {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    border-left: 6px solid #18b400;
+}
+
+.status-card:hover {
+    transform: translateY(-5px);
+}
+
+.status-card h3 {
+    font-size: 1.5em;
+    color: #0288d1;
+    margin-bottom: 10px;
+}
+
+.status-card p {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+/* Icons for each card */
+.status-card h3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8em;
+}
+
+.status-card h3::before {
+    margin-right: 10px;
+}
+
+/* Automation Control Buttons */
+button {
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 1.1em;
+    background-color: #0288d1;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.startBtn{
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 1.1em;
+    background-color: #00ea2f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.stopBtn{
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 1.1em;
+    background-color: #fd1010;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.startBtn:hover{
+    background-color: #64fe83;
+}
+
+.stopBtn:hover{
+    background-color: #ff5c5c;
+}
+
+button:disabled {
+    background-color: #b0bec5;
+    cursor: not-allowed;
+}
+
+/* button:hover:not(:disabled) {
+    background-color: #0277bd;
+} */
+
+/* Alert styling */
+.alert {
+    color: #d32f2f;
+    font-weight: bold;
+}
+
+.icon-image{
+    width: 60px;
+    height: 60px;
+}
