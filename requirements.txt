@@ -3,5 +3,6 @@ pandas
 numpy
 joblib
 pyserial
+gunicorn
 # time
 # os
