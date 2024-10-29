@@ -22,6 +22,11 @@ except Exception as e:
     print(f"Error loading model: {e}")
     model = None
 
+
+@app.route('/test'){
+    return 'Hello word'
+}
+
 @app.route('/predict', methods=['POST'])
 def predict():
     if model is None:
