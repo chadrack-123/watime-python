@@ -23,9 +23,9 @@ except Exception as e:
     model = None
 
 
-@app.route('/test'){
-    return 'Hello word'
-}
+@app.route('/test')
+def test():
+    return ('Hello word')
 
 @app.route('/predict', methods=['POST'])
 def predict():
